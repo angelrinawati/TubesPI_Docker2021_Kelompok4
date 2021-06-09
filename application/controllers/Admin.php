@@ -359,4 +359,35 @@ class Admin extends CI_Controller
 			die; 
 		}
 	}
+
+	public function pengembalian()
+	{
+		$data['title'] = 'Data Pengembalian Barang'; 
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['permohonan'] = $this->Model_barang->getPengembalian();
+		
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/pengembalian', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function pengembalian_setuju() {
+		$id_pinjam = $this->input->post('id_pinjam');
+
+		$data = [
+			'status' => 4
+		];
+
+		$where = [
+			'id_pinjam' => $id_pinjam
+		];
+
+		$this->db->where($where);
+		$this->db->update('tbl_pinjam', $data);
+
+		redirect('admin/pengembalian');	
+	}
 }
