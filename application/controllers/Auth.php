@@ -83,10 +83,16 @@ class Auth extends CI_Controller
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		public function registration()
 =======
 	public function registration()
 >>>>>>> origin/user1
+=======
+
+
+		public function registration()
+>>>>>>> 89fc6ae3e125c9f85d2f7b4297032c66693c0799
 	{
 		if($this->session->userdata('email')) {
 			redirect('user');
@@ -229,6 +235,9 @@ class Auth extends CI_Controller
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 89fc6ae3e125c9f85d2f7b4297032c66693c0799
 		public function logout()
 	{
 		$this->session->unset_userdata('email');
@@ -347,7 +356,10 @@ class Auth extends CI_Controller
 
 	
 }
+<<<<<<< HEAD
 =======
 
 }
 >>>>>>> origin/user1
+=======
+>>>>>>> 89fc6ae3e125c9f85d2f7b4297032c66693c0799

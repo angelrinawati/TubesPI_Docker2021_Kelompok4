@@ -248,4 +248,62 @@ class Admin extends CI_Controller
 		$this->db->delete('tbl_barang');
 		redirect('admin/barang');
 	}
+
+	public function permohonan()
+	{
+		$data['title'] = 'Data Permohonan Peminjaman'; 
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['permohonan'] = $this->Model_barang->getPermohonan();
+		
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/permohonan', $data);
+		$this->load->view('templates/footer');
+	}
+	
+	public function permohonan_setuju() {
+		$email = $this->input->post('email');
+		$id_pinjam = $this->input->post('id_pinjam');
+		
+		$token = base64_encode(random_bytes(32));
+
+		$data = [
+			'status' => 1
+		];
+
+		$where = [
+			'id_pinjam' => $id_pinjam
+		];
+
+		$this->db->where($where);
+		$this->db->update('tbl_pinjam', $data);
+
+		$this->_sendEmail($token, 'setuju');
+
+		redirect('admin/permohonan');	
+	}
+
+	public function permohonan_tolak() {
+		$email = $this->input->post('email');
+		$id_pinjam = $this->input->post('id_pinjam');
+
+		$token = base64_encode(random_bytes(32));
+
+		$data = [
+			'status' => 2
+		];
+
+		$where = [
+			'id_pinjam' => $id_pinjam
+		];
+
+		$this->db->where($where);
+		$this->db->update('tbl_pinjam', $data);
+
+		$this->_sendEmail($token, 'tolak');
+
+		redirect('admin/permohonan');	
+	}
 }
