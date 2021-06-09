@@ -306,4 +306,57 @@ class Admin extends CI_Controller
 
 		redirect('admin/permohonan');	
 	}
+
+	private function _sendEmail($token, $type)
+	{
+		$config = [
+			'protocol' => 'smtp',
+			'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_user' => 'aplikasipinjamhelp@gmail.com',
+			'smtp_pass' => 'jessicaer15',
+			'smtp_port' => 465,
+			'mailtype' => 'html',
+			'charset' => 'utf-8',
+			'newline' => "\r\n"
+		];
+
+		$this->load->library('email');
+		$this->email->initialize($config);
+
+		$this->email->from('aplikasipinjamhelp@gmail.com', 'Pinjam Admin');
+		$this->email->to($this->input->post('email'));
+		$this->email->subject('Konfirmasi Peminjaman Barang');
+
+		//data untuk dimasukkan kedalam email
+		$full_name = $this->input->post('full_name');
+		$name = $this->input->post('name');
+		$jumlah = $this->input->post('jumlah');
+		$awal_pinjam = $this->input->post('awal_pinjam');
+		$akhir_pinjam = $this->input->post('akhir_pinjam');
+
+		$data = array(
+			'full_name' => $full_name,
+			'name' => $name,
+			'jumlah' => $jumlah,
+			'awal_pinjam' => $awal_pinjam,
+			'akhir_pinjam' => $akhir_pinjam,
+			'title' => 'Konfirmasi Peminjaman Barang'
+		);
+
+		if($type == 'setuju') {
+			$body = $this->load->view('admin/email_setuju', $data, TRUE);
+    		$this->email->message($body); 
+		} else if($type == 'tolak') {
+			$body = $this->load->view('admin/email_tolak', $data, TRUE);
+    		$this->email->message($body);
+		}
+		
+
+		if($this->email->send()) {
+			return true;
+		} else {
+			echo $this->email->print_debugger();
+			die; 
+		}
+	}
 }
