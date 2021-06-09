@@ -90,4 +90,11 @@ class Admin extends CI_Controller
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Access Changed</div>');
 
 	}
+
+    public function deleteRole($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('user_role');
+		redirect('admin/role');
+	}
 }
