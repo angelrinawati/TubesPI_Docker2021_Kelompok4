@@ -390,4 +390,18 @@ class Admin extends CI_Controller
 
 		redirect('admin/pengembalian');	
 	}
+
+	public function history()
+	{
+		$data['title'] = 'History'; 
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+		$data['history'] = $this->Model_barang->getHistory();
+		
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('admin/history', $data);
+		$this->load->view('templates/footer');
+	}
 }
