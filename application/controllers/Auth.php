@@ -82,7 +82,11 @@ class Auth extends CI_Controller
 
 	}
 
+<<<<<<< HEAD
 		public function registration()
+=======
+	public function registration()
+>>>>>>> origin/user1
 	{
 		if($this->session->userdata('email')) {
 			redirect('user');
@@ -224,6 +228,7 @@ class Auth extends CI_Controller
 		}
 	}
 
+<<<<<<< HEAD
 		public function logout()
 	{
 		$this->session->unset_userdata('email');
@@ -342,3 +347,7 @@ class Auth extends CI_Controller
 
 	
 }
+=======
+
+}
+>>>>>>> origin/user1
