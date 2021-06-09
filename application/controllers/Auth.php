@@ -82,6 +82,8 @@ class Auth extends CI_Controller
 
 	}
 
+
+
 		public function registration()
 	{
 		if($this->session->userdata('email')) {
